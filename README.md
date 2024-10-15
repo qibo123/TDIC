@@ -1,8 +1,6 @@
 # TDIC
-TDIC is a temporal dynamic interaction-aware collaborative filtering model designed to provide personalized recommendations by leveraging user-item interaction history and temporal dynamics. This repository contains the implementation of the TDIC model, along with training and evaluation scripts.
+The goal of this project is to model user interest and conformity in a time-aware manner. TDIC disentangles interest and conformity using item popularity, while LGNTDIC extends this by adding LightGCN-based graph learning layers. The models also support BPR loss and discrepancy-based penalties.
 
-# Training
-To train the TDIC model, run the following command:
-
-/bash
-python main.py --config config.json --train
+Training
+Configuration
+You can configure the models and training parameters using command-line flags. Example flags include:
