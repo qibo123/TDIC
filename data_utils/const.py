@@ -1,5 +1,5 @@
-mb1m = '/home/amax/qibo/DICE_v3/DICE/data/mb1m/output/'
-myket = '/home/amax/qibo/DICE_v3/DICE/data/myket/output/'
+mb1m = 'data/mb1m/output/'
+myket = 'data/myket/output/'
 
 
 coo_record = 'coo_record.npz'
@@ -16,5 +16,3 @@ blend_popularity = 'popularity_blend.npy'
 train_coo_adj_graph = 'train_coo_adj_graph.npz'
 train_skew_coo_adj_graph = 'train_skew_coo_adj_graph.npz'
 train_blend_coo_adj_graph = 'train_blend_coo_adj_graph.npz'
-
-ckpt = 'ckpt/'
