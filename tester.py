@@ -1,11 +1,9 @@
-# tester.py
 
 import torch
 import numpy as np
 from tqdm import tqdm
 from absl import logging
- # 导入 config 文件
-from metrics import Judger  # 假设你已经定义了 Judger 类
+from metrics import Judger  
 import faiss
 
 class FaissInnerProductMaximumSearchGenerator:
