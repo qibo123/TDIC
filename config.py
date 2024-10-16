@@ -22,10 +22,11 @@ class Config:
         self.pool = 40
         self.shuffle = True
         self.num_workers = 8
-        self.topk = [20]
+        self.topk = [50]
         self.metrics = ['recall', 'hit_ratio', 'ndcg']
         self.val_metrics = ['recall', 'hit_ratio', 'ndcg']
         self.cg_use_gpu = True
         self.cg_gpu_id = 1
+        self.checkpoint_dir='./check/'
 
 

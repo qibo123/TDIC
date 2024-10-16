@@ -41,15 +41,16 @@ class Tester:
         self.judger = Judger(config, dm, max(config.topk))
         self.device = device
         self.max_topk = max(config.topk)
+        self.results = {k: 0.0 for k in self.judger.metrics}
 
-    def evaluate(self, dataloader):
+    def evaluate(self, dataloader,margin_topk):
         self.model.eval()
         total_loss = 0
         all_items = []
         all_test_pos = []
         all_num_test_pos = []
-
         self.make_cg()
+        real_num_test_users = 0
 
         with torch.no_grad():
             for batch_count, data in enumerate(tqdm(dataloader)):
@@ -57,25 +58,22 @@ class Tester:
                 users, train_pos, test_pos, num_test_pos = data
                 users = users.squeeze()
 
+                items = self.cg(users, max(self.config.topk)+margin_topk)
 
-
-                items = self.cg(users, max(self.config.topk))
                 items = self.filter_history(items, train_pos)
 
-                all_items.append(items)
-                all_test_pos.append(test_pos)
-                all_num_test_pos.append(num_test_pos)
+                batch_results, valid_num_users = self.judger.judge(items, test_pos, num_test_pos)
 
-        all_items = torch.cat(all_items, dim=0)
-        all_test_pos = torch.cat(all_test_pos, dim=0)
-        all_num_test_pos = torch.cat(all_num_test_pos, dim=0)
+                real_num_test_users = real_num_test_users + valid_num_users
 
-        results, valid_num_users = self.judger.judge(all_items, all_test_pos, all_num_test_pos)
+                for metric, value in batch_results.items():
+                    self.results[metric] = self.results[metric] + value
 
-        for metric, value in results.items():
-            results[metric] = value / valid_num_users
+        for metric, value in self.results.items():
+            if metric in ['recall', 'hit_ratio', 'ndcg']:
+                self.results[metric] = value/real_num_test_users
 
-        return total_loss / len(dataloader), results
+        return self.results
 
     def make_cg(self):
         self.item_embeddings = self.model.get_item_embeddings()

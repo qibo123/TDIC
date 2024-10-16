@@ -79,10 +79,10 @@ class DatasetManager(object):
 
 
 
-class tDICESampler(SAMPLER.Sampler):
+class TDICSampler(SAMPLER.Sampler):
 
     def __init__(self, flags_obj, lil_record, dok_record, neg_sample_rate, popularity,  margin=10, pool=10):
-        super(tDICESampler, self).__init__(flags_obj, lil_record, dok_record, neg_sample_rate)
+        super(TDICSampler, self).__init__(flags_obj, lil_record, dok_record, neg_sample_rate)
         self.popularity = popularity
         self.margin = margin
         self.pool = pool

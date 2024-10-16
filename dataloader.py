@@ -11,11 +11,11 @@ import scipy.sparse as sp
 
 
 def get_dataloaders(flags_obj, dm):
-    train_dataset = tDICEFactorizationDataset(flags_obj, dm)
+    train_dataset = TDICFactorizationDataset(flags_obj, dm)
     train_dataloader = DataLoader(train_dataset, batch_size=flags_obj.batch_size, shuffle=flags_obj.shuffle,
                                   num_workers=flags_obj.num_workers, drop_last=True)
 
-    val_dataset = tDICEFactorizationDataset(flags_obj, dm)
+    val_dataset = TDICFactorizationDataset(flags_obj, dm)
     val_dataloader = DataLoader(val_dataset, batch_size=flags_obj.batch_size, shuffle=False,
                                 num_workers=flags_obj.num_workers, drop_last=True)
 
@@ -28,8 +28,8 @@ class FactorizationDataProcessor(object):
         self.name = flags_obj.name + '_fdp'
 
     @staticmethod
-    def get_tDICE_dataloader(flags_obj, dm):
-        dataset = tDICEFactorizationDataset(flags_obj, dm)
+    def get_TDIC_dataloader(flags_obj, dm):
+        dataset = TDICFactorizationDataset(flags_obj, dm)
         return DataLoader(dataset, batch_size=flags_obj.batch_size, shuffle=flags_obj.shuffle,
                           num_workers=flags_obj.num_workers, drop_last=True)
 
@@ -58,10 +58,10 @@ class FactorizationDataset(Dataset):
     def __getitem__(self, index):
 
         raise NotImplementedError
-class tDICEFactorizationDataset(FactorizationDataset):
+class TDICFactorizationDataset(FactorizationDataset):
 
     def __init__(self, flags_obj, dm):
-        super(tDICEFactorizationDataset, self).__init__(flags_obj, dm)
+        super(TDICFactorizationDataset, self).__init__(flags_obj, dm)
         self.make_sampler(flags_obj, dm)
 
     def make_sampler(self, flags_obj, dm):
@@ -73,13 +73,13 @@ class tDICEFactorizationDataset(FactorizationDataset):
         train_lil_record = transformer.coo2lil(train_coo_record)
         train_dok_record = transformer.coo2dok(train_coo_record)
 
-        self.sampler = utils.tDICESampler(flags_obj, train_lil_record, train_dok_record, flags_obj.neg_sample_rate, dm.popularity, margin=flags_obj.margin, pool=flags_obj.pool)
+        self.sampler = utils.TDICSampler(flags_obj, train_lil_record, train_dok_record, flags_obj.neg_sample_rate, dm.popularity, margin=flags_obj.margin, pool=flags_obj.pool)
 
         train_skew_coo_record = dm.skew_coo_record
         train_skew_lil_record = transformer.coo2lil(train_skew_coo_record)
         train_skew_dok_record = transformer.coo2dok(train_skew_coo_record)
 
-        self.skew_sampler = utils.tDICESampler(flags_obj, train_skew_lil_record, train_skew_dok_record, flags_obj.neg_sample_rate, dm.popularity,  margin=flags_obj.margin, pool=flags_obj.pool)
+        self.skew_sampler = utils.TDICSampler(flags_obj, train_skew_lil_record, train_skew_dok_record, flags_obj.neg_sample_rate, dm.popularity,  margin=flags_obj.margin, pool=flags_obj.pool)
 
     def __len__(self):
         return len(self.sampler.record) + len(self.skew_sampler.record)

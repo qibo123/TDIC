@@ -52,10 +52,10 @@ class Trainer:
     def train(self, train_dataloader):
         for epoch in range(self.config.num_epochs):
             train_loss = self._train_epoch(train_dataloader)
-            val_loss, metrics = self.tester.evaluate(self.val_dataloader)
+            metrics = self.tester.evaluate(self.val_dataloader,self.topk_margin)
 
             # 打印每个 epoch 的结果
-            print(f"Epoch {epoch+1}/{self.config.num_epochs}, Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}")
+            print(f"Epoch {epoch+1}/{self.config.num_epochs}, Train Loss: {train_loss:.4f}")
             for metric, value in metrics.items():
                 print(f"Validation {metric}: {value:.4f}")
 
