@@ -1,5 +1,5 @@
 mb1m = 'data/mb1m/output/'
-myket = '/data/myket/output/'
+myket = 'data/myket/output/'
 
 coo_record = 'coo_record.npz'
 train_coo_record = 'train_coo_record.npz'
