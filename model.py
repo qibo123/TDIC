@@ -6,7 +6,7 @@ from torch.nn import Parameter
 
 class TDIC(nn.Module):
 
-    def __init__(self, num_users, num_items, embedding_size, dis_loss, dis_pen, int_weight, pop_weight, tide_weight):
+    def __init__(self, num_users, num_items, embedding_size, dis_loss, dis_pen, int_weight, pop_weight, tdic_weight):
         super(TDIC, self).__init__()
 
         self.users_int = Parameter(torch.FloatTensor(num_users, embedding_size))
@@ -19,7 +19,7 @@ class TDIC(nn.Module):
 
         self.int_weight = int_weight
         self.pop_weight = pop_weight
-        self.tide_weight = tide_weight
+        self.tdic_weight = tdic_weight
 
         # loss
         if dis_loss == 'L1':
@@ -69,7 +69,7 @@ class TDIC(nn.Module):
         loss_tide = self.bpr_loss(p_score_tide, n_score_tide)
 
 
-        loss = self.int_weight * loss_int + self.pop_weight * loss_pop + self.tide_weight * loss_tide
+        loss = self.int_weight * loss_int + self.pop_weight * loss_pop + self.tdic_weight * loss_tide
 
         return loss
 
