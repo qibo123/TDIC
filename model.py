@@ -63,13 +63,13 @@ class TDIC(nn.Module):
         pop_p = F.softplus(self.q[item_p]) + F.softplus(self.b[item_p])
         pop_n = F.softplus(self.q[item_n]) + F.softplus(self.b[item_n])
 
-        p_score_tide = torch.tanh(pop_p) * p_score_total
-        n_score_tide = torch.tanh(pop_n) * n_score_total
+        p_score_tdic = torch.tanh(pop_p) * p_score_total
+        n_score_tdic = torch.tanh(pop_n) * n_score_total
 
-        loss_tide = self.bpr_loss(p_score_tide, n_score_tide)
+        loss_tdic = self.bpr_loss(p_score_tdic, n_score_tdic)
 
 
-        loss = self.int_weight * loss_int + self.pop_weight * loss_pop + self.tdic_weight * loss_tide
+        loss = self.int_weight * loss_int + self.pop_weight * loss_pop + self.tdic_weight * loss_tdic
 
         return loss
 
