@@ -12,10 +12,9 @@ Train and evaluate the model with the following commands.
 You can also add command parameters to specify dataset/GPU id, or get fast execution by dataset sampling.
 
 ```shell
-cd src
+# set parameters in config.py 
 # --dataset: (str) dataset name
-# --msl: (int) max sequence length
-# --gpu: (int) gpu id
-# --sample: (int) sample number for fast execution
-python run_clhhn.py
+# --epochs: (int) epoch numbers
+# --neg_sample_rate: (int) negative sample numbers
+python main.py
 ```
