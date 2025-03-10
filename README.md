@@ -9,7 +9,7 @@ The goal of this project is to model user interest and conformity in a time-awar
 * tqdm = 4.64.4
 ### Train & Test
 Train and evaluate the model with the following commands.
-You can also add command parameters to specify dataset/GPU id, or get fast execution by dataset sampling.
+You can also add command parameters to specify dataset/epoch, or set neg-sampling rate.
 
 ```shell
 # set parameters in config.py 
