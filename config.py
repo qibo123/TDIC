@@ -12,7 +12,7 @@ class Config:
         self.learning_rate = 0.001
         self.batch_size = 32
         self.num_epochs = 10
-        self.model_type = 'TDIC'  # 或者 'LGNTDIC'
+        self.model_type = 'TDIC' 
         self.num_layers = 2
         self.dropout = 0.5
         self.neg_sample_rate = 4
@@ -23,8 +23,8 @@ class Config:
         self.shuffle = True
         self.num_workers = 8
         self.topk = [50]
-        self.metrics = ['recall', 'hit_ratio', 'ndcg']
-        self.val_metrics = ['recall', 'hit_ratio', 'ndcg']
+        self.metrics = ['recall', 'ndcg']
+        self.val_metrics = ['recall',  'ndcg']
         self.cg_use_gpu = True
         self.cg_gpu_id = 1
         self.checkpoint_dir='./check/'
